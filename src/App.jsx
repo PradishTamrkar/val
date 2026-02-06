@@ -64,6 +64,8 @@ export default function ValentineApp() {
       "IMG-7b7fc7faa666b20e2ace9921471245c3-V_yoixb0",
       "IMG_20250506_204058_822_gtxoxy",
       "PXL_20240521_095319175_qukdhp",
+      "IMG_20250719_171437_896_quezcb",
+      "IMG-20250824-WA0026_cgkm7i",
     ],
 
     reasons: [

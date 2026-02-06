@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Sparkles, Calendar, MapPin } from 'lucide-react';
+import { Heart, Sparkles, Calendar, Mail } from 'lucide-react';
 
 export default function ValentineApp() {
   const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 });
@@ -8,48 +8,62 @@ export default function ValentineApp() {
   const [answered, setAnswered] = useState(false);
   const noButtonRef = useRef(null);
 
+  // IMPORTANT: Replace with your Cloudinary cloud name
+  const CLOUDINARY_CLOUD_NAME = "dnlpjkxqq";
+
+  // Helper function to generate Cloudinary URLs
+  const getCloudinaryUrl = (publicId, width = 400, height = 400) => {
+    return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/w_${width},h_${height},c_fill,g_auto,q_auto,f_auto/${publicId}`;
+  };
+
   // Your relationship data - CUSTOMIZE THIS!
   const relationshipData = {
     startDate: "May 19, 2024",
     daysTogether: Math.floor((new Date() - new Date('2024-05-19')) / (1000 * 60 * 60 * 24)),
-    
-    timeline: [
-      {
-        title: "How Were We At The Start",
-        description: "Remember, how I used to wait to see you in college and you used to run upstairs to your class feeling all shy, I'll never forget those days, you were soooo cute!!!! ",
-        image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&q=80",
-        emoji: "✨"
-      },
-      {
-        title: "Falling Deeper",
-        description: "Remember when you along with your friends were in the library and i came there, you were feeling all shy and i sat next to you and then we talked, i still remember those moments.",
-        image: "https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=800&q=80",
-        emoji: "💕"
-      },
-      {
-        title: "Our First Date",
-        description: "We went to patan durbar square as our first date after my birthday celebration",
-        image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&q=80",
-        emoji: "☕"
-      },
-      {
-        title: "Foods every date",
-        description: "We had to go eat everytime we met and on every single dates, there were no dates without any food!",
-        image: "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800&q=80",
-        emoji: "🌄"
-      },
-      {
-        title: "Growing Together",
-        description: "Through ups and downs, we grew stronger supporting each other. You became my best friend and my love.",
-        image: "https://images.unsplash.com/photo-1573152143286-0c422b4d2175?w=800&q=80",
-        emoji: "🌱"
-      },
-      {
-        title: "Today & Forever",
-        description: "Here we are, stronger than ever. Every day with you is a gift I cherish.",
-        image: "https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=800&q=80",
-        emoji: "💖"
-      }
+
+    // Letter to your girlfriend - CUSTOMIZE THIS!
+    letter: {
+      greeting: "My Cutest Dearest Love,",
+      paragraphs: [
+        "From the moment I first saw you running up those college stairs, feeling all shy, I knew you were special. Those early days of waiting just to catch a glimpse of you are memories I'll treasure forever. You were so incredibly cute, and you still are!",
+        
+        "Do you remember that day in the library? When I gathered all my courage to sit next to you? My heart was racing, but being near you felt so right. Every moment we've shared since then has only made me fall deeper in love with you.",
+        
+        "Our first date at Patan Durbar Square after my birthday - that was when I knew you were the one. The way you smile, the way you laughed at my silly jokes, the way you understand me like no one else ever has. You make every ordinary moment feel extraordinary.",
+        
+        "I love how we can't go on a single date without food becoming a major part of our adventure! Those shared meals aren't just about eating - they're about us, our conversations, our laughter, our connection. Every bite tastes better when I'm with you.",
+        
+        "Through all our ups and downs, you've been my constant. You've made me a better person just by being yourself. Your kindness, your strength, your beautiful heart - everything about you amazes me every single day.",
+        
+        `It's been ${Math.floor((new Date() - new Date('2024-05-19')) / (1000 * 60 * 60 * 24))} magical days together, and I want a lifetime more. You're not just my girlfriend - you're my best friend, my partner, my everything. I love you more than words could ever express.`,
+        
+        " I Love You Babe, every day with you is a valentine's day",
+
+        "Happy Valentine's Day Love"
+      ],
+      closing: "Forever yours,",
+      signature: "Your Love ❤️"
+    },
+
+    // Photo gallery - Add your Cloudinary image public IDs here
+    // Upload photos to Cloudinary and use the public ID (the part after your cloud name in the URL)
+    // Example: if URL is https://res.cloudinary.com/demo/image/upload/sample.jpg
+    // then publicId is "sample"
+    photos: [
+      "20250519_141012899_lv0lje", // Replace with your actual Cloudinary public IDs
+      "IMG_20250123_105953_661_rmucvy",
+      "IMG-20250214-WA0030_crmyn4",
+      "IMG_20260123_102613_293_hbude5",
+      "IMG-20240703-WA0086_s6gfum",
+      "IMG-20250616-WA0332_domxr1",
+      "IMG-20250924-WA0181_klksf1",
+      "IMG_20251020_183310_109_tnry4p",
+      "IMG-20250616-WA0404_amw5ha",
+      "received_3956708527902928_kqnc6u",
+      "IMG-20240521-WA0033_zi7lnz",
+      "IMG-7b7fc7faa666b20e2ace9921471245c3-V_yoixb0",
+      "IMG_20250506_204058_822_gtxoxy",
+      "PXL_20240521_095319175_qukdhp",
     ],
 
     reasons: [
@@ -57,7 +71,7 @@ export default function ValentineApp() {
       "The way you laugh at my silly jokes",
       "Your kindness and compassionate heart",
       "How you make every moment special",
-      "Your strength and determination",
+      "The way you take all my flirty lines",
       "The way you understand me like no one else",
       "Your passion for the things you love",
       "How you make me want to be better"
@@ -185,9 +199,6 @@ export default function ValentineApp() {
               <Calendar style={{ width: '1.25rem', height: '1.25rem' }} />
               <span>Since {relationshipData.startDate}</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span>{relationshipData.location}</span>
-            </div>
           </div>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -205,14 +216,74 @@ export default function ValentineApp() {
               boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
             }}
           >
-            Explore Our Journey 💕
+            A Letter For You 💕
           </motion.button>
         </motion.div>
       </section>
 
-      {/* Timeline Section */}
+      {/* Love Letter Section */}
+      <section style={{ padding: '5rem 1rem', background: 'linear-gradient(to right, #fef3c7, #fce7f3)' }}>
+        <div style={{ maxWidth: '56rem', margin: '0 auto' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+              <Mail style={{ width: '3rem', height: '3rem', color: '#ec4899', margin: '0 auto 1rem' }} />
+              <h2 style={{
+                fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+                fontWeight: 'bold',
+                background: 'linear-gradient(to right, #dc2626, #db2777)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text'
+              }}>
+                A Letter to You
+              </h2>
+            </div>
+
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.9)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '1rem',
+              padding: 'clamp(2rem, 5vw, 3rem)',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+              position: 'relative'
+            }}>
+              {/* Decorative hearts */}
+              <Heart style={{ position: 'absolute', top: '1rem', right: '1rem', width: '1.5rem', height: '1.5rem', color: '#f472b6', opacity: 0.3 }} fill="currentColor" />
+              <Heart style={{ position: 'absolute', bottom: '1rem', left: '1rem', width: '1.5rem', height: '1.5rem', color: '#ef4444', opacity: 0.3 }} fill="currentColor" />
+
+              <div style={{ fontFamily: 'Georgia, serif', color: '#1f2937', lineHeight: '1.8' }}>
+                <p style={{ fontSize: '1.5rem', fontStyle: 'italic', marginBottom: '2rem', color: '#db2777' }}>
+                  {relationshipData.letter.greeting}
+                </p>
+
+                {relationshipData.letter.paragraphs.map((paragraph, index) => (
+                  <p key={index} style={{ fontSize: '1.125rem', marginBottom: '1.5rem', textAlign: 'justify' }}>
+                    {paragraph}
+                  </p>
+                ))}
+
+                <div style={{ marginTop: '3rem', textAlign: 'right' }}>
+                  <p style={{ fontSize: '1.25rem', fontStyle: 'italic', marginBottom: '0.5rem' }}>
+                    {relationshipData.letter.closing}
+                  </p>
+                  <p style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#db2777' }}>
+                    {relationshipData.letter.signature}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Photo Gallery Section */}
       <section style={{ padding: '5rem 1rem' }}>
-        <div style={{ maxWidth: '72rem', margin: '0 auto' }}>
+        <div style={{ maxWidth: '80rem', margin: '0 auto' }}>
           <motion.h2
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -228,45 +299,45 @@ export default function ValentineApp() {
               backgroundClip: 'text'
             }}
           >
-            Our Beautiful Journey Together
+            Our Precious Memories 
           </motion.h2>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '5rem' }}>
-            {relationshipData.timeline.map((moment, index) => (
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
+            gap: '1.5rem' 
+          }}>
+            {relationshipData.photos.map((photoId, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.05, zIndex: 10 }}
                 style={{
-                  display: 'flex',
-                  flexDirection: window.innerWidth > 768 ? (index % 2 === 0 ? 'row' : 'row-reverse') : 'column',
-                  gap: '2rem',
-                  alignItems: 'center'
+                  borderRadius: '1rem',
+                  overflow: 'hidden',
+                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                  cursor: 'pointer',
+                  aspectRatio: '1/1'
                 }}
               >
-                <div style={{ flex: 1 }}>
-                  <div style={{ position: 'relative' }}>
-                    <img
-                      src={moment.image}
-                      alt={moment.title}
-                      style={{
-                        width: '100%',
-                        height: '20rem',
-                        objectFit: 'cover',
-                        borderRadius: '1rem',
-                        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-                      }}
-                    />
-                  </div>
-                </div>
-                <div style={{ flex: 1, textAlign: window.innerWidth > 768 ? 'left' : 'center' }}>
-                  <span style={{ fontSize: '4rem', marginBottom: '1rem', display: 'block' }}>{moment.emoji}</span>
-                  <h3 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem' }}>{moment.title}</h3>
-                  <p style={{ color: '#db2777', fontWeight: 600, marginBottom: '1rem' }}>{moment.date}</p>
-                  <p style={{ color: '#4b5563', fontSize: '1.125rem', lineHeight: '1.75' }}>{moment.description}</p>
-                </div>
+                <img
+                  src={getCloudinaryUrl(photoId)}
+                  alt={`Memory ${index + 1}`}
+                  loading="lazy"
+                  style={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'cover',
+                    display: 'block'
+                  }}
+                  onError={(e) => {
+                    // Fallback to a placeholder if image fails to load
+                    e.target.src = `https://via.placeholder.com/400x400/ec4899/ffffff?text=Photo+${index + 1}`;
+                  }}
+                />
               </motion.div>
             ))}
           </div>
@@ -380,20 +451,32 @@ export default function ValentineApp() {
                       fontSize: '1.5rem',
                       border: 'none',
                       cursor: 'pointer',
-                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                      zIndex: 1
                     }}
                   >
                     Yes! 💖
                   </motion.button>
 
+                  {/* Invisible placeholder to keep Yes button in place */}
+                  <div style={{ 
+                    width: '11rem', 
+                    visibility: 'hidden',
+                    pointerEvents: 'none'
+                  }}></div>
+
                   <motion.button
                     ref={noButtonRef}
                     onMouseEnter={moveNoButton}
                     onClick={moveNoButton}
-                    animate={{ x: noButtonPosition.x, y: noButtonPosition.y }}
+                    animate={{ 
+                      x: noButtonPosition.x, 
+                      y: noButtonPosition.y
+                    }}
                     transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                     style={{
                       position: 'absolute',
+                      right: 'calc(50% - 11rem - 0.75rem)',
                       background: '#9ca3af',
                       color: 'white',
                       fontWeight: 'bold',
@@ -402,7 +485,8 @@ export default function ValentineApp() {
                       fontSize: '1.5rem',
                       border: 'none',
                       cursor: 'pointer',
-                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                      zIndex: 2
                     }}
                   >
                     No
